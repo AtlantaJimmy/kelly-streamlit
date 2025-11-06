@@ -8,10 +8,9 @@ st.title("Kelly — AI Scientist Chatbot (Poet)")
 st.caption("Skeptical. Analytical. Practical — every answer is a poem that questions broad AI claims and ends with one concrete step.")
 
 # Load Groq key (environment variable or Streamlit secrets)
-GROQ_KEY = os.environ.get("GROQ_API_KEY") or (st.secrets.get("GROQ_API_KEY") if st.secrets else None)
+GROQ_KEY = os.environ.get("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY")
 if not GROQ_KEY:
     st.warning("GROQ_API_KEY not set. Kelly will use a safe local fallback poem.")
-    client = None
 else:
     client = Groq(api_key=GROQ_KEY)
 
@@ -28,10 +27,11 @@ if st.button("Ask Kelly"):
         st.info("Type a question first.")
     else:
         with st.spinner("Kelly is composing..."):
-            if not client:
+            if not GROQ_KEY:
                 reply = fallback_kelly(q)
             else:
                 try:
+                    # Choose a supported model (8B instant recommended for quick tests)
                     model_id = "llama-3.1-8b-instant"
                     resp = client.chat.completions.create(
                         model=model_id,
@@ -56,7 +56,7 @@ if st.button("Ask Kelly"):
 def fallback_kelly(q):
     return (
         f'Kelly asks in verse with skeptical care:\n'
-        f'Question: \"{q}\"\n\n'
+        f'Question: "{q}"\n\n'
         'I pry the claim where data hid its teeth;\n'
         'Small test, big caveat — nuance underneath.\n'
         'Bias whispers where the labels misalign;\n'
