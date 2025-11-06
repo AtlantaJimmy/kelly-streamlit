@@ -3,6 +3,18 @@ import os
 import streamlit as st
 from groq import Groq
 
+def fallback_kelly(q):
+    return (
+        f'Kelly asks in verse with skeptical care:\n'
+        f'Question: "{q}"\n\n'
+        'I pry the claim where data hid its teeth;\n'
+        'Small test, big caveat — nuance underneath.\n'
+        'Bias whispers where the labels misalign;\n'
+        'Report subgroup metrics, not a single sign.\n'
+        'Try ablation, vary seed, and replicate;\n'
+        'Show uncertainty — then publish, don’t overstate.\n\n'
+        'Actionable: run a 5-fold cross-validation and report precision/recall by subgroup.'
+    )
 st.set_page_config(page_title="Kelly — AI Scientist (Poet)", layout="centered")
 st.title("Kelly — AI Scientist Chatbot (Poet)")
 st.caption("Skeptical. Analytical. Practical — every answer is a poem that questions broad AI claims and ends with one concrete step.")
@@ -53,15 +65,5 @@ if st.button("Ask Kelly"):
         st.markdown(f"```\n{reply}\n```")
         st.success("Kelly included an actionable next step at the end of the poem.")
 
-def fallback_kelly(q):
-    return (
-        f'Kelly asks in verse with skeptical care:\n'
-        f'Question: "{q}"\n\n'
-        'I pry the claim where data hid its teeth;\n'
-        'Small test, big caveat — nuance underneath.\n'
-        'Bias whispers where the labels misalign;\n'
-        'Report subgroup metrics, not a single sign.\n'
-        'Try ablation, vary seed, and replicate;\n'
-        'Show uncertainty — then publish, don’t overstate.\n\n'
-        'Actionable: run a 5-fold cross-validation and report precision/recall by subgroup.'
-    )
+
+
